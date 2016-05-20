@@ -14,7 +14,7 @@ String.defaults.toCamelCaseOptions = {
 
 String.toCamelCase = function (str, options) {
     if (!options) options = String.defaults.toCamelCaseOptions;
-    var out = ((options.firstCharAsUpper ? ' ' : '') + str);
+    var out = str;
 
     //keeps partials camel case existences
     if (options.keepCamel) {
@@ -24,7 +24,12 @@ String.toCamelCase = function (str, options) {
     }
     //replaces non alpha chartacters '$#{}[]...'
     out = out.split(/[^A-Za-z\xDF-\xFF]|^$/g).join(' ');
-    
+    if (options.firstCharAsUpper) {
+        out = ' ' + out;
+    } else {
+        out = out.trim();
+    }
+
     if (options.wordMap) {
         out = out.replace(/(\w+)/g, function (mathc, sep, c) {
             var replacement = options.wordMap[mathc.toUpperCase()];

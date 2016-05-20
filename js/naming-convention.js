@@ -45,10 +45,10 @@ String.toCamelCase = function (str, options) {
     return out;
 };
 String.toUCamelCase = function (str, keepCamel, wordMap) {
-    return String.toCamelCase(str, { keepCamel: keepCamel, wordMap: wordMap, firstCharAsUpper: true });
+    return String.toCamelCase(str, { keepCamel: (keepCamel == undefined ? true : keepCamel), wordMap: wordMap, firstCharAsUpper: true });
 };
 String.toLCamelCase = function (str, keepCamel, wordMap) {
-    return String.toCamelCase(str, { keepCamel: keepCamel, wordMap: wordMap, firstCharAsUpper: false });
+    return String.toCamelCase(str, { keepCamel: (keepCamel == undefined ? true : keepCamel), wordMap: wordMap, firstCharAsUpper: false });
 };
 
 String.prototype.toUCamelCase = function (keepCamel, wordMap) {

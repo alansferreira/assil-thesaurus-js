@@ -6,26 +6,38 @@ String.defaults.toCamelCaseOptions = {
     keepCamel: true,
     // indicates map to replace words founded 
     // the keys must be UPPER CASE
-    //[{'FROM': 'TO'}]
-    wordMap: null //{'FIND': 'replaceTo' , 'FIND2':'orRePLEACEtoo'}; 
+    //[{'CODIGO': 'cod', 'NOME': 'NM'}] -> will replace 'CODIGO' to 'cod'
+    wordMap: null
 };
+
+// String.defaults.toCamelCaseOptions = [{'CODIGO': 'cod', 'NOME': 'NM'}];
+
 String.toCamelCase = function (str, options) {
     if (!options) options = String.defaults.toCamelCaseOptions;
     var out = ((options.firstCharAsUpper ? ' ' : '') + str);
-    
-    //keeps partials camel case existences
-    if(options.keepCamel) out = out.replace(/([A-Z])/, function (mathc, sep, c) { return ' ' + mathc; });
 
+    //keeps partials camel case existences
+    if (options.keepCamel) {
+        out = out.replace(/([A-Z])/g, function (mathc, sep, c) { return ' ' + mathc; });
+    } else {
+        out = out.toLowerCase();
+    }
     //replaces non alpha chartacters '$#{}[]...'
-    out = out.split(/[^a-z\xDF-\xFF]|^$/).join(' ');
+    out = out.split(/[^A-Za-z\xDF-\xFF]|^$/g).join(' ');
+    
+    if (options.wordMap) {
+        out = out.replace(/(\w+)/g, function (mathc, sep, c) {
+            var replacement = options.wordMap[mathc.toUpperCase()];
+            return replacement ? replacement : mathc;
+        });
+    }
 
     // uppercase characters preceded by a space or number
     out = out.replace(/(\-|_|\s)+(.)?/g, function (mathc, sep, c) {
         return (c ? c.toUpperCase() : '');
     });
 
-
-    return str;
+    return out;
 };
 String.toUCamelCase = function (str, keepCamel, wordMap) {
     return String.toCamelCase(str, { keepCamel: keepCamel, wordMap: wordMap, firstCharAsUpper: true });

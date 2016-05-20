@@ -1,7 +1,7 @@
 # naming-convention
 Simple naming convention implementation for javascript, this functions translates names to Upper or Lower Camel Case 
 
-https://rawgit.com/alansferreira/assil-js-parsers/master/src/demo/index-templating.html
+https://rawgit.com/alansferreira/naming-convention/master/index.html
 
 ```javascript
 String.toUCamelCase('my-name-convention'); // -> 'MyNameConvention' 

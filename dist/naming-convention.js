@@ -31,8 +31,18 @@ String.toCamelCase = function (str, options) {
     });
     return str;
 };
-String.prototype.toCamelCase = function (options) {
-    return String.toCamelCase(this, options);
+String.toUCamelCase = function (str, wordMap) {
+    return String.toCamelCase(str, { wordMap: wordMap, firstCharAsUpper: true });
+};
+String.toLCamelCase = function (str, wordMap) {
+    return String.toCamelCase(str, { wordMap: wordMap, firstCharAsUpper: false });
+};
+
+String.prototype.toUCamelCase = function (wordMap) {
+    return String.toUCamelCase(this, wordMap);
+};
+String.prototype.toLCamelCase = function (wordMap) {
+    return String.toLCamelCase(this, wordMap);
 };
 
 //alert(String.toCamelCase('codIGo_clien99te'));
